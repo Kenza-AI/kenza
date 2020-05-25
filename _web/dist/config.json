@@ -1,0 +1,7 @@
+{
+    "apiHost": "localhost",
+    "apiPort": "8080",
+    "apiProtocol": "http",
+    "apiVersion": "v1",
+    "appVersion": "{APP_VERSION}"
+}

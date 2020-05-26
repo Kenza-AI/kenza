@@ -206,3 +206,6 @@ Kenza is composed of the following components:
 
 The Kenza web application is a [ReactJS](https://github.com/facebook/react) / [Redux](https://react-redux.js.org) Single Page Application (SPA). You can use the standard tooling e.g. React Tools ([Chrome](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en), [Firefox](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/)) to troubleshoot  / report issues with specific browsers.
 
+## Note on tests (or lack thereof)
+_Kenza_ was originally built as a typical cloud based pipeline on _AWS_; tests will be being moved as they are getting adapted to the container-based world, probably starting with the ones that are the least impacted by the move e.g. the UI / web app.
+

@@ -59,12 +59,32 @@
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#getting-started-for-data-scientists-and-ml-infrastructure-engineers">Getting started for Data Scientists and ML Infrastructure Engineers</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#checking-current-service-status">Checking current service status</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#scaling-up">Scaling up</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cleaning-up">Cleaning up</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#updating-kenza">Updating Kenza</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#running-kenza-on-the-cloud">Running Kenza on the Cloud</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#provisioning-resources">Provisioning resources</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#getting-detailed-service-execution-details">Getting detailed service execution details</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#component-overview">Component Overview</a>
+    <li class="toctree-l3"><a class="reference internal" href="#component-overview">Component Overview</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#kenza-ui">Kenza UI</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a>
         <ul>
@@ -266,12 +286,118 @@ train:
 <li>Click on the id of the training on the top right corner and you'll find the configuration of the training job, input data path, model output path, accuracy metrics and many more!
 <img alt="Training Job Details Page" src="training_job_details_page.png" /></li>
 </ol>
+<h4 id="checking-current-service-status">Checking current service status</h4>
+<p>You can check the status of <em>Kenza</em> and its services with:</p>
+<pre><code class="sh">kenza status
+</code></pre>
+
+<blockquote>
+<p>If the output feels familiar, it's because <em>Kenza</em> is deployed as a <em>Docker stack</em>. Running <code>docker stack ps kenza</code> would generate the same output.</p>
+</blockquote>
+<h3 id="scaling-up">Scaling up</h3>
+<p>Kenza runs "one job per worker"; workers are ephemeral in nature and only handle one job before closing down. To run more than one jobs in parallel, simply add more workers:</p>
+<pre><code class="sh">kenza scale worker=5
+</code></pre>
+
+<blockquote>
+<p><strong>Note:</strong> Kenza workers do not need nearly as many resources as one may think (due to the nature of ML jobs) because the actual training takes place on the cloud. Kenza workers only clone the repos, prepare the job commands to be run and report on the status of the jobs as they progress through time.</p>
+</blockquote>
+<h3 id="cleaning-up">Cleaning up</h3>
+<p>You can stop Kenza with:</p>
+<pre><code class="sh">kenza stop
+</code></pre>
+
+<h3 id="updating-kenza">Updating Kenza</h3>
+<p>To update to the latest available version, run:</p>
+<pre><code class="sh">kenza update
+</code></pre>
+
+<blockquote>
+<p><strong>Note:</strong> Currently, this only updates the Kenza executable, future work will stop Kenza, apply all necessary changes and restart the system to ensure all services are brought up to their latest versions, migrations are performed etc.</p>
+</blockquote>
 <h2 id="running-kenza-on-the-cloud">Running Kenza on the Cloud</h2>
-<p>More more</p>
+<h3 id="provisioning-resources">Provisioning resources</h3>
+<p><em>Kenza</em> leverages <a href="https://docs.docker.com/machine/overview/">containers</a> to run on the cloud. Before starting <em>Kenza</em>, the required resources (manager server(s) / instances, security groups etc) need to be provisioned first.</p>
+<p>Ensure your local <em>AWS</em> access levels (the profile or role you will be using when running <code>kenza provision</code> commands) meet the <a href="https://github.com/docker/machine/issues/1655#issuecomment-409407523"><em>IAM</em> policy requirements for deploying a <em>Docker Machine</em></a>.</p>
+<p>To provision a machine with the <a href="https://docs.docker.com/v17.12/machine/drivers/aws/#options">default values</a> on <em>AWS</em>, run:</p>
+<pre><code class="sh">kenza provision --driver amazonec2 --amazonec2-iam-instance-profile sagemaker-aware-intance-profile kenza-machine-1
+</code></pre>
+
+<p>Any other options you pass will be honored; all options are passed as-is to the corresponding <code>docker-machine</code> command. One would pass additional options to use a pre-existing VPC or Security Group to limit access to the instance to a specific office IP range for example. The full list of options available can be found <a href="https://docs.docker.com/v17.12/machine/drivers/aws/#options">here</a>.</p>
+<p>You can use any name for the <code>Docker Machine</code> (<em>kenza-machine-1</em> in the example above) but the only <code>driver</code> supported for now is <code>"amazonec2"</code>.</p>
+<blockquote>
+<p><strong>Note</strong>: It is highly recommended that the role assigned to the Kenza manager instance follows the <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege">Principle of Least Privilege</a> and only provides access to the services and resources that will actually be needed. To identify the exact permissions needed for your use cases use <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-roles.html">this AWS reference</a>
+specific to <em>SageMaker</em>. If unsure, <em>AWS</em> has been aggressively adding <a href="https://aws.amazon.com/blogs/security/tag/access-advisor/">tools</a> to make control of roles' more manageable. There are also open-source <em>Least Privilege Policy</em> generators like <em>Saleforce's</em> <a href="https://github.com/salesforce/policy_sentry/">Policy Centry</a>.</p>
+</blockquote>
+<p>Run <code>docker machine ls</code> to verify the machine you just created is available.</p>
+<p>You can also check the <a href="https://console.aws.amazon.com/ec2/home">EC2 Dashboard</a> on your <em>AWS</em> account for the various resources created (e.g. an instance and a key pair matching the "name" parameter provided earlier to the <code>provision</code> command, the "docker-machine" security group and others).</p>
+<p>To deploy <em>Kenza</em> on the newly created reources, we first need to ensure the <code>Docker Machine</code> we just created is <a href="https://docs.docker.com/machine/reference/active/"><em>active</em></a>. To do this, run (substituting if needed <code>kenza-machine-1</code> with the name you provided to the <code>provision</code> command):</p>
+<pre><code class="sh">eval $(kenza env kenza-machine-1)
+</code></pre>
+
+<p>Verify <code>Docker</code> is now actually "forwarding all calls" to the remote machine:</p>
+<pre><code class="sh">docker-machine active
+</code></pre>
+
+<p>With the machine set up, all <em>Kenza</em> commands will now be run against our newly deployed infrastructure, not your local machine.</p>
+<p>To start <em>Kenza</em> on EC2, simply run (substituting if needed <code>kenza-machine-1</code> with the name you provided to the <code>provision</code> command):</p>
+<pre><code class="sh">kenza start --name kenza-machine-1 --github-secret webhooks-secret --apikey a-randomly-generated-key
+</code></pre>
+
+<p>After <em>Kenza</em> starts, it will open your default browser to the URL / Public IP of the machine where the <em>Kenza</em> web app can be reached.</p>
+<p>Once launched, you can <a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-to-ec2-instance.html">associate your instance with a static IP or a domain name</a>.</p>
 <h2 id="troubleshooting">Troubleshooting</h2>
-<p>More more</p>
-<h2 id="component-overview">Component Overview</h2>
-<p>More more</p>
+<h3 id="getting-detailed-service-execution-details">Getting detailed service execution details</h3>
+<p>You can observe detailed log output for a service with:</p>
+<pre><code class="sh">kenza logs service_name
+</code></pre>
+
+<p>You can stop an individual service with:</p>
+<pre><code class="sh">kenza stop service_name
+</code></pre>
+
+<p>Valid service names:
+- db
+- api
+- web
+- worker
+- pubsub
+- progress
+- scheduler</p>
+<h3 id="component-overview">Component Overview</h3>
+<p>Kenza is composed of the following components:</p>
+<ul>
+<li><strong>API</strong> - Service called by all other services, including the cli, to read / mutate Kenza related data (projects, jobs, schedules etc). </li>
+</ul>
+<blockquote>
+<p>Note: API is the only service with direct access / dependency to the Kenza data store. All other services <em>MUST</em> go through the API.</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>Web</strong> - <em>React.js</em> web application, the <em>Kenza UI</em>.</p>
+</li>
+<li>
+<p><strong>Worker</strong> - Worker nodes, the container tasks actually running the jobs. Workers are ephemeral and strictly process one job and one job only before shutting themselves down.</p>
+</li>
+<li>
+<p><strong>Progress</strong> - Listens for job updates published by the worker nodes and propagates them to the <em>API</em>.</p>
+</li>
+<li>
+<p><strong>Scheduler</strong> - Listens for job arrivals (on-demand, webhooks and scheduled jobs) and schedules them accordingly to be picked up by workers for processing.</p>
+</li>
+<li>
+<p><strong>PubSub</strong> - <em>RabbitMQ</em> exchanges and queues, used for async comms among services.</p>
+</li>
+<li>
+<p><strong>DB</strong> - The <em>kenza</em> data store (currently <em>Postgres</em>). It can be a <em>Postgres</em> container (default option, provided by <em>Kenza</em> as a container) or an external resource e.g. an <em>AWS RDS</em>, <em>Heroku</em> or on-prem installation.</p>
+</li>
+<li>
+<p><strong>CLI</strong> - The <em>Kenza</em> command line utility. Think <em>kubectl, systemctl</em>.</p>
+</li>
+</ul>
+<p><em>Kenza</em> currently supports <em>Docker Swarm</em> environments. Support for <em>Kubernetes</em> is being added in 2020.</p>
+<h3 id="kenza-ui">Kenza UI</h3>
+<p>The Kenza web application is a <a href="https://github.com/facebook/react">ReactJS</a> / <a href="https://react-redux.js.org">Redux</a> Single Page Application (SPA). You can use the standard tooling e.g. React Tools (<a href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en">Chrome</a>, <a href="https://addons.mozilla.org/en-US/firefox/addon/react-devtools/">Firefox</a>) to troubleshoot  / report issues with specific browsers.</p>
 <h2 id="documentation">Documentation</h2>
 <p>The following 4 ML pipelines are supported currently:</p>
 <h3 id="train">Train</h3>
@@ -417,5 +543,5 @@ hyperparameter_optimization:
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-05-26 20:44:36.916404+00:00
+Build Date UTC : 2020-05-26 20:54:30.745744+00:00
 -->

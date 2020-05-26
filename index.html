@@ -139,44 +139,53 @@
                 <h1 id="kenza">Kenza</h1>
 <p><a href="https://beta.kenza.ai/#/">Kenza</a> is an open-source Machine Learning Platform.</p>
 <p>More specifically, it is an open source cloud-native (moving from Docker Swarm to Kubernetes in 2020) system for Machine Learning Continuous Integration and Delivery (CD4ML) you can run in one command. It leverages containers and the cloud to provide basic mechanisms for training, tuning and deploying Machine Learning models.</p>
-<p><strong>What ML Engines does it support?</strong>
-    - AWS SageMaker
-    - More to be added soon</p>
-<p><strong>What does it provide to Data Scientists?</strong>
-- A web UI where you can track and compare your training and hyperparameter tuning jobs, and model deployments</p>
-<p><strong>How does a Data Scientist use it?</strong>
-- It's very simple! You need to implement a <code>train</code> and <code>predict</code> functionality in Python, and define a YAML file. Example:</p>
-<pre><code>```
-sagify:
+<p><strong>What ML Engines does it support?</strong></p>
+<ul>
+<li>AWS SageMaker</li>
+<li>More to be added soon</li>
+</ul>
+<p><strong>What does it provide to Data Scientists?</strong></p>
+<ul>
+<li>A web UI where you can track and compare your training and hyperparameter tuning jobs, and model deployments</li>
+</ul>
+<p><strong>How does a Data Scientist use it?</strong></p>
+<ul>
+<li>It's very simple! You need to implement a <code>train</code> and <code>predict</code> functionality in Python, and define a YAML file. Example:<pre><code>sagify:
 
 train:
-  input_s3_dir: s3://sagify-0.13.1/iris.csv
+  input_s3_dir: s3://kenza-ds-demo/iris-data/iris.data
   output_s3_dir: s3://kenza-training-models
+  hyperparameters_file: hyperparameters.json
   ec2_type: ml.m5.large
-  hyperparameters_file: hyperparams.json
   volume_size: 50
   timeout: 86400
+  metrics: Accuracy
 
   deploy:
     instances_count: 1
     ec2_type: ml.t2.medium
     endpoint: some-endpoint
-```
 </code></pre>
-<p><strong>Why a Machine Learning team should care?</strong>
-- Focus on Machine Learning, not ML Ops
-- Continuous and Reliable training,  hyperparameter tuning and deployment
-- Version control of ML models
-- Shorter time to put a model in production
-- No need to spend months to change your current ML codebase to meet the needs of this ML platform
-- Integrates easily with existing software engineering best practices
-- Less resources invested on ML Infrastructure Engineers</p>
-<p><strong>Why a Machine Learning Infrastructure team should care?</strong>
-- Clean open-source ML Platform
-- Customize it as you wish 
-- Shorter time to deliver 
-- Easy to integrate with existing Engineering processes
-- Support of many ML Engines (at the moment only AWS SageMaker)</p>
+</li>
+</ul>
+<p><strong>Why a Machine Learning team should care?</strong></p>
+<ul>
+<li>Focus on Machine Learning, not ML Ops</li>
+<li>Continuous and Reliable training,  hyperparameter tuning and deployment</li>
+<li>Version control of ML models</li>
+<li>Shorter time to put a model in production</li>
+<li>No need to spend months to change your current ML codebase to meet the needs of this ML platform</li>
+<li>Integrates easily with existing software engineering best practices</li>
+<li>Less resources invested on ML Infrastructure Engineers</li>
+</ul>
+<p><strong>Why a Machine Learning Infrastructure team should care?</strong></p>
+<ul>
+<li>Clean open-source ML Platform</li>
+<li>Customize it as you wish </li>
+<li>Shorter time to deliver </li>
+<li>Easy to integrate with existing Engineering processes</li>
+<li>Support of many ML Engines (at the moment only AWS SageMaker)</li>
+</ul>
 <p><strong>The best part is that you can continue using your favorite libraries!</strong></p>
 <h2 id="installation">Installation</h2>
 <h3 id="prerequisites">Prerequisites</h3>
@@ -543,5 +552,5 @@ hyperparameter_optimization:
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-05-26 20:57:48.581242+00:00
+Build Date UTC : 2020-05-26 21:01:14.396334+00:00
 -->

@@ -91,7 +91,7 @@ Built:   2019-12-09T18:57:05Z
 Commit:  099415b5087d919d086b383da73afe1b99bf546f
 ```
 
-## Getting started for Data Scientists
+## Getting started for Data Scientists and ML Infrastructure Engineers
 
 Start (or restart) *Kenza* by running:
 
@@ -168,8 +168,6 @@ Now, you are ready to train your first ML model:
 ![Training Job](training_job.png)
 20. Click on the id of the training on the top right corner and you'll find the configuration of the training job, input data path, model output path, accuracy metrics and many more!
 ![Training Job Details Page](training_job_details_page.png)
-    
-## Getting started for ML Infrastructure Engineers
 
 ## Running Kenza on the Cloud
 

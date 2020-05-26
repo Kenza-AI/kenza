@@ -16,3 +16,6 @@ vendor/
 
 # dev data dir
 kenza/data/
+
+# mkdocs documentation
+/site

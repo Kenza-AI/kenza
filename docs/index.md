@@ -139,18 +139,17 @@ Now, you are ready to train your first ML model:
 
 13. Create in the root directory of the project a YAML file with name `.kenza.yml` and the following content:
 
-    ```
-    sagify:
-    
-    train:
-      input_s3_dir: s3://kenza-ds-demo/iris-data/iris.data
-      output_s3_dir: s3://<your-own-bucket>
-      hyperparameters_file: hyperparameters.json
-      ec2_type: ml.m5.large
-      volume_size: 50
-      timeout: 86400
-      metrics: Accuracy
-    ```
+        sagify:
+        
+        train:
+          input_s3_dir: s3://kenza-ds-demo/iris-data/iris.data
+          output_s3_dir: s3://<your-own-bucket>
+          hyperparameters_file: hyperparameters.json
+          ec2_type: ml.m5.large
+          volume_size: 50
+          timeout: 86400
+          metrics: Accuracy
+
 14. Commit and push changes to master branch
 15. Make sure you have created an account on `http://localhost/#/signup` and log in on `http://localhost/`
 16. You should see a button prompting you to create your first Kenza project. Click on it.
@@ -188,7 +187,6 @@ The following 4 ML pipelines are supported currently:
 ### Train
 In this case, you want just to train your model(s) every time you push to a specific Git branch and report Precision and Recall. An example on how you can specify your `.kenza.yml`:
     
-    ```
     sagify:
     
     train:
@@ -199,7 +197,6 @@ In this case, you want just to train your model(s) every time you push to a spec
       volume_size: 50                            # EBS Volume size
       timeout: 86400                             # Time out (in seconds) until training is forced to stop
       metrics: Precision, Recall                 # Evaluation metrics to report
-    ```
     
 The section "Getting started for Data Scientists" shows how to set up your ML project and report the evaluation metrics in detail.
 
@@ -207,7 +204,6 @@ The section "Getting started for Data Scientists" shows how to set up your ML pr
 ### Train and Deploy
 In this case, you want just to train your model(s) every time you push to a specific Git branch, report Precision and Recall, and (re-)deploy it as a REST Service. An example on how you can specify your `.kenza.yml`:
     
-    ```
     sagify:
     
     train:
@@ -223,7 +219,7 @@ In this case, you want just to train your model(s) every time you push to a spec
         instances_count: 1                       # Number of EC2 instances for inference
         ec2_type: ml.t2.medium                   # EC Type for inference
         endpoint: some-endpoint                  # Name of endpoint
-    ```
+
     
 The section "Getting started for Data Scientists" shows how to set up your ML project and report the evaluation metrics in detail. In this example you need to implement the deploy functionality. Sagify documentation has an example: https://kenza-ai.github.io/sagify/.
 
@@ -231,7 +227,6 @@ The section "Getting started for Data Scientists" shows how to set up your ML pr
 ### Tune
 In this case, you want just to tune your model(s) every time you push to a specific Git branch and report best hyperparameter values. An example on how you can specify your `.kenza.yml`:
     
-    ```
     sagify:
     
     hyperparameter_optimization:
@@ -243,11 +238,9 @@ In this case, you want just to tune your model(s) every time you push to a speci
       timeout: 86400                                   # Time out (in seconds) until training is forced to stop
       max_jobs: 2                                      # Number of total max tuning jobs
       max_parallel_jobs: 2                             # Number of max parallel tuning jobs
-    ```
 
 You also need to specify the hyperparameter ranges file. Here's an example:
 
-    ```
     {
         "ParameterRanges": {
             "CategoricalParameterRanges": [
@@ -276,13 +269,11 @@ You also need to specify the hyperparameter ranges file. Here's an example:
             "Type": "Maximize"
         }
     }
-    ```
 
 
 ### Tune and Deploy
 In this case, you want just to tune your model(s) every time you push to a specific Git branch, report report best hyperparameter values, and (re-)deploy the best model as a REST Service. An example on how you can specify your `.kenza.yml`:
     
-    ```
     sagify:
     
     hyperparameter_optimization:
@@ -299,6 +290,5 @@ In this case, you want just to tune your model(s) every time you push to a speci
         instances_count: 1                       # Number of EC2 instances for inference
         ec2_type: ml.t2.medium                   # EC Type for inference
         endpoint: some-endpoint                  # Name of endpoint
-    ```
 
 You also need to specify the hyperparameter ranges file as specified previously.

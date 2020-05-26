@@ -1,4 +1,4 @@
-# kenza
+# Kenza
 
 [Kenza](https://beta.kenza.ai/#/) is an open-source Machine Learning Platform.
 

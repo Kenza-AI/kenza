@@ -1,10 +1,10 @@
 ## Kenza
 
-*Kenza* is an open source cloud-native system for Machine Learning Continuous Integration and Delivery you can run in one command. It leverages containers and the cloud to provide basic mechanisms for building, training and deploying Machine Learning models on [AWS SageMaker](https://aws.amazon.com/sagemaker/).
+*Kenza* is an open source cloud-native system (moving from `Docker Swarm` to `Kubernetes` in 2020) for Machine Learning Continuous Integration and Delivery you can run in one command. It leverages containers and the cloud to provide basic mechanisms for building, training and deploying Machine Learning models on [AWS SageMaker](https://aws.amazon.com/sagemaker/).
 
-It makes it easy to schedule training, batch prediction, hyperparameter tuning and deployment jobs on regular intervals or speicifc points in time e.g. running batch predictions every week or automatically redeploying a model in a QA or production environment every morning.
+It makes it easy to schedule training, batch prediction, hyperparameter tuning and deployment jobs on regular intervals or specific points in time e.g. running batch predictions every week or automatically redeploying a model in a QA or production environment every morning.
 
-On top of its traditional "pipeline" features, the *Kenza* web app helps identify training (or other) jobs that are performing better e.g. have a better _accuracy_ or _precision_ score. (joakim: Better way to say this? That's the "compare" UI we had in the alpha version. Should we add it back?)
+On top of its traditional "pipeline" features, the *Kenza* web app helps identify training (or other) jobs that are performing better e.g. have a better _accuracy_ or _precision_ score.
 
 ## Installation
 
@@ -39,7 +39,7 @@ Kenza info
 
 Version: v0.0.32
 Built:   2019-12-09T18:57:05Z
-Commit:  099415b5087d919d086b383da73afe1b99bf546f
+Commit:  099415b5087d919d086b383da73afe1b99bf5k0a
 ```
 
 ## Getting Started
@@ -55,9 +55,7 @@ kenza start
 
 > **Important:** The directory from which the `kenza` commands are run from is significant. `kenza start` creates a `kenza` directory in the directory the command was run from. If you run the command again in a different directory, a new `kenza` directory will be created there, essentially a separate `kenza` installation. 
 
-**TODO(Joakim):** Warn on `kenza start` if no `kenza` directory is present in the directory the commnad was run from.
-
-After Kenza has started, navigate to `http://localhost/#/signup` to create an account and get started.
+After Kenza has started, it will attempt to navigate you to `http://localhost/#/signup` to create an account and get you started.
 
 #### Checking current service status
 
@@ -68,22 +66,21 @@ kenza status
 ```
 
 > If the output feels familiar, it's because *Kenza* is deployed as a *Docker stack*. Running `docker stack ps kenza` would generate the same output.
-**TODO Joakim**: Move this to a "Getting Started with Kenza" blog post, too detailed
 
 
-### Scaling up
+### Scaling down/up
 
-Kenza runs "one job per worker"; workers are ephemeral in nature and only handle one job before closing down. To run more than one jobs in parallel, simply add more workers:
+Kenza runs "one job per worker"; workers are ephemeral in nature and only handle one job before shutting down. To run more than one jobs in parallel, simply add more workers:
 
 ```sh
 kenza scale worker=5
 ```
 
-> **Note:** Kenza workers do not need nearly as many resources as one may think (due to the nature of ML jobs) because the actual training takes place on the cloud. Kenza workers only clone the repos, prepare the job commands to be run and report on the status of the jobs as they progress through time.
+> **Note:** Kenza workers do not need nearly as many resources as one may think (due to the nature of ML jobs) because the actual training takes place on the cloud. Kenza workers only clone the repos, prepare the job commands to be run and report on the status of the jobs as they progress through their lifetime.
 
 ### Cleaning up
 
-You can stop Kenza with:
+You can stop Kenza _without any data loss_ with:
 
 ```sh
 kenza stop
@@ -97,35 +94,35 @@ To update to the latest available version, run:
 ```sh
 kenza update
 ```
-> **Note:** Currently, this only updates the Kenza executable, future work will stop Kenza, apply all necessary changes and restart the system to ensure all services are brought up to their latest versions, migrations are performed etc.
+> **Note:** Currently, this only updates the Kenza executable, future work will stop Kenza, apply all necessary changes and restart the system to ensure all services are brought up to their latest versions, migrations are performed etc. For now, please run `kenza stop` before updating.
 
 ## Running Kenza on the Cloud
 
 ### Provisioning resources
 
-*Kenza* leverages [containers](https://docs.docker.com/machine/overview/) to run on the cloud. Before starting *Kenza*, the required resources (manager server(s) / instances, security groups etc) need to be provisioned first.
+*Kenza* leverages [containers](https://docs.docker.com/machine/overview/) (currently orchestrated with _Docker Swarm_, moving to _Kubernetes_ in 2020) to run on the cloud. Before starting *Kenza*, the required resources (manager server(s) / instances, security groups etc) need to be provisioned first.
 
 Ensure your local *AWS* access levels (the profile or role you will be using when running `kenza provision` commands) meet the [*IAM* policy requirements for deploying a *Docker Machine*](https://github.com/docker/machine/issues/1655#issuecomment-409407523).
 
-To provision a machine with the [default values](https://docs.docker.com/v17.12/machine/drivers/aws/#options) on *AWS*, run:
+To provision a machine with the [default values](https://docs.docker.com/machine/drivers/aws/#options) on *AWS*, run:
 
 ```sh
-kenza provision --driver amazonec2 --amazonec2-iam-instance-profile sagemaker-aware-intance-profile kenza-machine-1
+kenza provision --driver amazonec2 --amazonec2-iam-instance-profile your-sagemaker-aware-intance-profile kenza-machine-1
 ```
 
-Any other options you pass will be honored; all options are passed as-is to the corresponding `docker-machine` command. One would pass additional options to use a pre-existing VPC or Security Group to limit access to the instance to a specific office IP range for example. The full list of options available can be found [here](https://docs.docker.com/v17.12/machine/drivers/aws/#options).
+Any other options you pass will be honored; all options are passed as-is to the corresponding `docker-machine` command. One would pass additional options to use a pre-existing _VPC_ or _Security Group_ to limit access to the instance to a specific office IP range for example. The full list of options available can be found [here](https://docs.docker.com/machine/drivers/aws/#options).
 
 You can use any name for the `Docker Machine` (_kenza-machine-1_ in the example above) but the only `driver` supported for now is `"amazonec2"`.
 
 > **Note**: It is highly recommended that the role assigned to the Kenza manager instance follows the [Principle of Least Privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege) and only provides access to the services and resources that will actually be needed. To identify the exact permissions needed for your use cases use [this AWS reference](https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-roles.html)
-specific to _SageMaker_. If unsure, *AWS* has been aggressively adding [tools](https://aws.amazon.com/blogs/security/tag/access-advisor/) to make control of roles' more manageable. There are also open-source _Least Privilege Policy_ generators like _Saleforce's_ [Policy Centry](https://github.com/salesforce/policy_sentry/).
+specific to _SageMaker_. If unsure, *AWS* has been aggressively adding [tools](https://aws.amazon.com/blogs/security/tag/access-advisor/) to make control of roles' more manageable. There are also open-source _Least Privilege Policy_ generators like _Saleforce's_ [Policy Centry](https://github.com/salesforce/policy_sentry/) you can use to ensure permissions are only as elevated as needed.
 
 
 Run `docker machine ls` to verify the machine you just created is available.
 
 You can also check the [EC2 Dashboard](https://console.aws.amazon.com/ec2/home) on your *AWS* account for the various resources created (e.g. an instance and a key pair matching the "name" parameter provided earlier to the `provision` command, the "docker-machine" security group and others).
 
-To deploy *Kenza* on the newly created reources, we first need to ensure the `Docker Machine` we just created is [*active*](https://docs.docker.com/machine/reference/active/). To do this, run (substituting if needed `kenza-machine-1` with the name you provided to the `provision` command):
+To deploy *Kenza* on the newly created resources, we first need to ensure the `Docker Machine` we just created is [*active*](https://docs.docker.com/machine/reference/active/). To do this, run (substituting if needed `kenza-machine-1` with the name you provided to the `provision` command):
 
 ```sh
 eval $(kenza env kenza-machine-1)
@@ -137,7 +134,7 @@ Verify `Docker` is now actually "forwarding all calls" to the remote machine:
 docker-machine active
 ```
 
-With the machine set up, all *Kenza* commands will now be run against our newly deployed infrastructure, not your local machine.
+With the machine set up, all *Kenza* commands will now be run against the newly deployed infrastructure, not your local machine.
 
 To start _Kenza_ on EC2, simply run (substituting if needed `kenza-machine-1` with the name you provided to the `provision` command):
 
@@ -174,13 +171,19 @@ Valid service names:
 - progress
 - scheduler
 
+#### Restarting Kenza
+
+Restarting _Kenza_ or _Docker_ can sometimes help when `Docker Swarm` seems to be "stuck".
+
+For any other issue, please [raise an issue](https://github.com/Kenza-AI/kenza/issues/new).
+
 ## Component Overview
 
 Kenza is composed of the following components:
 
 - **API** - Service called by all other services, including the cli, to read / mutate Kenza related data (projects, jobs, schedules etc). 
 
-> Note: API is the only service with direct access / dependency to the Kenza data store. All other services *MUST* go through the API.
+> Note for contributors: API is the only service with direct access / dependency to the Kenza data store(s). All other services *MUST* go through the API.
 
 - **Web** - *React.js* web application, the *Kenza UI*.
 

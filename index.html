@@ -276,8 +276,7 @@ train:
 <p>The following 4 ML pipelines are supported currently:</p>
 <h3 id="train">Train</h3>
 <p>In this case, you want just to train your model(s) every time you push to a specific Git branch and report Precision and Recall. An example on how you can specify your <code>.kenza.yml</code>:</p>
-<pre><code>```
-sagify:
+<pre><code>sagify:
 
 train:
   input_s3_dir: s3://sagify-0.13.1/iris.csv  # Path to training data on S3
@@ -287,13 +286,11 @@ train:
   volume_size: 50                            # EBS Volume size
   timeout: 86400                             # Time out (in seconds) until training is forced to stop
   metrics: Precision, Recall                 # Evaluation metrics to report
-```
 </code></pre>
 <p>The section "Getting started for Data Scientists" shows how to set up your ML project and report the evaluation metrics in detail.</p>
 <h3 id="train-and-deploy">Train and Deploy</h3>
 <p>In this case, you want just to train your model(s) every time you push to a specific Git branch, report Precision and Recall, and (re-)deploy it as a REST Service. An example on how you can specify your <code>.kenza.yml</code>:</p>
-<pre><code>```
-sagify:
+<pre><code>sagify:
 
 train:
   input_s3_dir: s3://sagify-0.13.1/iris.csv  # Path to training data on S3
@@ -308,13 +305,11 @@ train:
     instances_count: 1                       # Number of EC2 instances for inference
     ec2_type: ml.t2.medium                   # EC Type for inference
     endpoint: some-endpoint                  # Name of endpoint
-```
 </code></pre>
 <p>The section "Getting started for Data Scientists" shows how to set up your ML project and report the evaluation metrics in detail. In this example you need to implement the deploy functionality. Sagify documentation has an example: https://kenza-ai.github.io/sagify/.</p>
 <h3 id="tune">Tune</h3>
 <p>In this case, you want just to tune your model(s) every time you push to a specific Git branch and report best hyperparameter values. An example on how you can specify your <code>.kenza.yml</code>:</p>
-<pre><code>```
-sagify:
+<pre><code>sagify:
 
 hyperparameter_optimization:
   input_s3_dir: s3://sagify-0.13.1/iris.csv        # Path to training data on S3
@@ -325,11 +320,9 @@ hyperparameter_optimization:
   timeout: 86400                                   # Time out (in seconds) until training is forced to stop
   max_jobs: 2                                      # Number of total max tuning jobs
   max_parallel_jobs: 2                             # Number of max parallel tuning jobs
-```
 </code></pre>
 <p>You also need to specify the hyperparameter ranges file. Here's an example:</p>
-<pre><code>```
-{
+<pre><code>{
     "ParameterRanges": {
         "CategoricalParameterRanges": [
             {
@@ -357,12 +350,10 @@ hyperparameter_optimization:
         "Type": "Maximize"
     }
 }
-```
 </code></pre>
 <h3 id="tune-and-deploy">Tune and Deploy</h3>
 <p>In this case, you want just to tune your model(s) every time you push to a specific Git branch, report report best hyperparameter values, and (re-)deploy the best model as a REST Service. An example on how you can specify your <code>.kenza.yml</code>:</p>
-<pre><code>```
-sagify:
+<pre><code>sagify:
 
 hyperparameter_optimization:
   input_s3_dir: s3://sagify-0.13.1/iris.csv        # Path to training data on S3
@@ -378,7 +369,6 @@ hyperparameter_optimization:
     instances_count: 1                       # Number of EC2 instances for inference
     ec2_type: ml.t2.medium                   # EC Type for inference
     endpoint: some-endpoint                  # Name of endpoint
-```
 </code></pre>
 <p>You also need to specify the hyperparameter ranges file as specified previously.</p>
               
@@ -427,5 +417,5 @@ hyperparameter_optimization:
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-05-26 20:42:28.702476+00:00
+Build Date UTC : 2020-05-26 20:44:36.916404+00:00
 -->

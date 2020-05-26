@@ -18,7 +18,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "kenza";
+    var mkdocs_page_name = "Kenza";
     var mkdocs_page_input_path = "index.md";
     var mkdocs_page_url = null;
   </script>
@@ -48,7 +48,7 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
                 <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href=".">kenza</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href=".">Kenza</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a>
         <ul>
@@ -102,7 +102,7 @@
     
       
     
-    <li>kenza</li>
+    <li>Kenza</li>
     <li class="wy-breadcrumbs-aside">
       
         <a href="https://github.com/Kenza-AI/kenza/edit/master/docs/index.md"
@@ -116,7 +116,7 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="kenza">kenza</h1>
+                <h1 id="kenza">Kenza</h1>
 <p><a href="https://beta.kenza.ai/#/">Kenza</a> is an open-source Machine Learning Platform.</p>
 <p>More specifically, it is an open source cloud-native (moving from Docker Swarm to Kubernetes in 2020) system for Machine Learning Continuous Integration and Delivery (CD4ML) you can run in one command. It leverages containers and the cloud to provide basic mechanisms for training, tuning and deploying Machine Learning models.</p>
 <p><strong>What ML Engines does it support?</strong>
@@ -242,22 +242,29 @@ sagify:</p>
   volume_size: 50
   timeout: 86400
   metrics: Accuracy
-<code>``
-14. Commit and push changes to master branch
-15. Make sure you have created an account on</code>http://localhost/#/signup<code>and log in on</code>http://localhost/<code>16. You should see a button prompting you to create your first Kenza project. Click on it.
-17. Now it's time to populate the fields:
-1. Go to</code>https://github.com/settings/tokens<code>and click on</code>repo:status<code>. This will give the ability to Kenza to have read access to this repo. Create the token and copy it.
-![Github token](github_token.png)
-2. Paste it on the access token field on Kenza
-3. Git ref regex should take the value</code>refs/heads/master<code>. This field denotes to which branches or tags to listen to. In this cases, we listen to changes only on master branch.
-4. Repository clone url should be the url of the forked repo under your github account. Example:</code>https://github.com/pm3310/kenza-ds-demo<code>5. The name of the project can be</code>Kenza DS Demo<code>6. The description field is optional. Leave it blank for now. 
-7. Click on</code>Create<code>! Voilà! Your first Kenza project is created! You should be landed on Kenza's page of projects. 
-18. Click on the</code>run` button on the bottom right corner of the newly created project. This will trigger Kenza to go and find the latest commit on master branch, grab the code and execute training. 
-19. Click on the arrow on the created project to see the list of jobs. You'll see something like that: 
-<img alt="Training Job" src="training_job.png" />
-20. Click on the id of the training on the top right corner and you'll find the configuration of the training job, input data path, model output path, accuracy metrics and many more!
-<img alt="Training Job Details Page" src="training_job_details_page.png" /></p>
+```</p>
 </li>
+<li>
+<p>Commit and push changes to master branch</p>
+</li>
+<li>Make sure you have created an account on <code>http://localhost/#/signup</code> and log in on <code>http://localhost/</code></li>
+<li>You should see a button prompting you to create your first Kenza project. Click on it.</li>
+<li>Now it's time to populate the fields:<ol>
+<li>Go to <code>https://github.com/settings/tokens</code> and click on <code>repo:status</code>. This will give the ability to Kenza to have read access to this repo. Create the token and copy it.
+<img alt="Github token" src="github_token.png" /></li>
+<li>Paste it on the access token field on Kenza</li>
+<li>Git ref regex should take the value <code>refs/heads/master</code>. This field denotes to which branches or tags to listen to. In this cases, we listen to changes only on master branch.</li>
+<li>Repository clone url should be the url of the forked repo under your github account. Example: <code>https://github.com/pm3310/kenza-ds-demo</code></li>
+<li>The name of the project can be <code>Kenza DS Demo</code></li>
+<li>The description field is optional. Leave it blank for now. </li>
+<li>Click on <code>Create</code>! Voilà! Your first Kenza project is created! You should be landed on Kenza's page of projects. </li>
+</ol>
+</li>
+<li>Click on the <code>run</code> button on the bottom right corner of the newly created project. This will trigger Kenza to go and find the latest commit on master branch, grab the code and execute training. </li>
+<li>Click on the arrow on the created project to see the list of jobs. You'll see something like that: 
+<img alt="Training Job" src="training_job.png" /></li>
+<li>Click on the id of the training on the top right corner and you'll find the configuration of the training job, input data path, model output path, accuracy metrics and many more!
+<img alt="Training Job Details Page" src="training_job_details_page.png" /></li>
 </ol>
 <h2 id="running-kenza-on-the-cloud">Running Kenza on the Cloud</h2>
 <p>More more</p>
@@ -420,5 +427,5 @@ hyperparameter_optimization:
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-05-26 20:35:53.259800+00:00
+Build Date UTC : 2020-05-26 20:38:41.974359+00:00
 -->

@@ -232,15 +232,17 @@ from iris_training import train as training_logic
 </li>
 <li>
 <p>Create in the root directory of the project a YAML file with name <code>.kenza.yml</code> and the following content:</p>
-<p>sagify:</p>
-<p>train:
+<pre><code>sagify:
+
+train:
   input_s3_dir: s3://kenza-ds-demo/iris-data/iris.data
-  output_s3_dir: s3://<your-own-bucket>
+  output_s3_dir: s3://&lt;your-own-bucket&gt;
   hyperparameters_file: hyperparameters.json
   ec2_type: ml.m5.large
   volume_size: 50
   timeout: 86400
-  metrics: Accuracy</p>
+  metrics: Accuracy
+</code></pre>
 </li>
 <li>
 <p>Commit and push changes to master branch</p>
@@ -425,5 +427,5 @@ hyperparameter_optimization:
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-05-26 20:39:35.191680+00:00
+Build Date UTC : 2020-05-26 20:42:28.702476+00:00
 -->

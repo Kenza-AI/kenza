@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="None">
+  
+  
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>sagify</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "kenza";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="." class="icon icon-home"> sagify</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href=".">kenza</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#install-kenza">Install Kenza</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#getting-started-for-data-scientists-and-ml-infrastructure-engineers">Getting started for Data Scientists and ML Infrastructure Engineers</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#running-kenza-on-the-cloud">Running Kenza on the Cloud</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#component-overview">Component Overview</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#train">Train</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#train-and-deploy">Train and Deploy</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#tune">Tune</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#tune-and-deploy">Tune and Deploy</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href=".">sagify</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>kenza</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/Kenza-AI/kenza/edit/master/docs/index.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="kenza">kenza</h1>
+<p><a href="https://beta.kenza.ai/#/">Kenza</a> is an open-source Machine Learning Platform.</p>
+<p>More specifically, it is an open source cloud-native (moving from Docker Swarm to Kubernetes in 2020) system for Machine Learning Continuous Integration and Delivery (CD4ML) you can run in one command. It leverages containers and the cloud to provide basic mechanisms for training, tuning and deploying Machine Learning models.</p>
+<p><strong>What ML Engines does it support?</strong>
+- AWS SageMaker
+- More to be added soon</p>
+<p><strong>What does it provide to Data Scientists?</strong>
+- A web UI where you can track and compare your training and hyperparameter tuning jobs, and model deployments</p>
+<p><strong>How does a Data Scientist use it?</strong>
+- It's very simple! You need to implement a <code>train</code> and <code>predict</code> functionality in Python, and define a YAML file. Example:</p>
+<pre><code>```
+sagify:
+
+train:
+  input_s3_dir: s3://sagify-0.13.1/iris.csv
+  output_s3_dir: s3://kenza-training-models
+  ec2_type: ml.m5.large
+  hyperparameters_file: hyperparams.json
+  volume_size: 50
+  timeout: 86400
+
+  deploy:
+    instances_count: 1
+    ec2_type: ml.t2.medium
+    endpoint: some-endpoint
+```
+</code></pre>
+<p><strong>Why a Machine Learning team should care?</strong>
+- Focus on Machine Learning, not ML Ops
+- Continuous and Reliable training,  hyperparameter tuning and deployment
+- Version control of ML models
+- Shorter time to put a model in production
+- No need to spend months to change your current ML codebase to meet the needs of this ML platform
+- Integrates easily with existing software engineering best practices
+- Less resources invested on ML Infrastructure Engineers</p>
+<p><strong>Why a Machine Learning Infrastructure team should care?</strong>
+- Clean open-source ML Platform
+- Customize it as you wish 
+- Shorter time to deliver 
+- Easy to integrate with existing Engineering processes
+- Support of many ML Engines (at the moment only AWS SageMaker)</p>
+<p><strong>The best part is that you can continue using your favorite libraries!</strong></p>
+<h2 id="installation">Installation</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>Prerequisites to install kenza</p>
+<h3 id="install-kenza">Install Kenza</h3>
+<p>Download the binary from the latest GitHub release:</p>
+<pre><code class="sh"># Linux
+curl -L https://github.com/kenza-ai/kenza/releases/download/v0.0.1-alpha/kenza-linux-amd64 -o kenza
+</code></pre>
+
+<pre><code class="sh"># macOS
+curl -L https://github.com/kenza-ai/kenza/releases/download/v0.0.1-alpha/kenza-darwin-amd64 -o kenza
+</code></pre>
+
+<p>Move it under a PATH directory, we prefer <code>/usr/local/bin</code>:</p>
+<pre><code class="sh">chmod +x kenza
+sudo mv ./kenza /usr/local/bin/kenza
+</code></pre>
+
+<p>Ensure you are on the expected version:</p>
+<pre><code class="sh">kenza info
+</code></pre>
+
+<p>You should see output similar to the following:</p>
+<pre><code class="sh">Kenza info
+
+Version: v0.0.32
+Built:   2019-12-09T18:57:05Z
+Commit:  099415b5087d919d086b383da73afe1b99bf546f
+</code></pre>
+
+<h2 id="getting-started-for-data-scientists-and-ml-infrastructure-engineers">Getting started for Data Scientists and ML Infrastructure Engineers</h2>
+<p>Start (or restart) <em>Kenza</em> by running:</p>
+<pre><code class="sh">kenza start
+</code></pre>
+
+<blockquote>
+<p><strong>Note:</strong> The first run might take longer than subsequent runs due to the <em>Docker</em> images downloading for the first time.</p>
+<p><strong>Important:</strong> The directory from which the <code>kenza</code> commands are run from is significant. <code>kenza start</code> creates a <code>kenza</code> directory in the directory the command was run from. If you run the command again in a different directory, a new <code>kenza</code> directory will be created there, essentially a separate <code>kenza</code> installation. </p>
+</blockquote>
+<p>After Kenza has started, navigate to <code>http://localhost/#/signup</code> to create an account and get started.</p>
+<p>Now, you are ready to train your first ML model:</p>
+<ol>
+<li>Make sure <code>awscli</code> is configured on your local machine and follow instructions <a href="https://kenza-ai.github.io/sagify/#usage">here</a> to set up an aws profile with access to SageMaker.</li>
+<li>Docker running locally</li>
+<li>A local AWS profile with access to AWS SageMaker should be added to your local <code>awscli</code> configuration. This <a href="https://kenza-ai.github.io/sagify/#usage">resource</a> can help you.</li>
+<li>Create an S3 bucket on your AWS account</li>
+<li>Fork the <code>https://github.com/Kenza-AI/kenza-ds-demo</code> onto your personal Github account</li>
+<li>Clone the forked repo and <code>cd kenza-ds-demo</code>.</li>
+<li><code>make create_environment</code> to create a virtualenv</li>
+<li><code>workon kenza-ds-demo</code> to activate the virtualenv</li>
+<li><code>make requirements</code> to install dependencies</li>
+<li><code>sagify init</code> to create the required scaffolding for Kenza</li>
+<li>Type in <code>kenza-ds-demo</code> for SageMaker app name, <code>N</code> in question <code>Are you starting a new project?</code>, <code>src</code> for question <code>Type in the directory where your code lives</code>, and make sure to choose Python 3 version. Then, choose your preferred AWS profile and region. Finally, type <code>requirements.txt</code> in question <code>Type in the path to requirements.txt</code>.</li>
+<li>
+<p>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>src/sagify_base/training/training.py</code> file with:</p>
+<pre><code>input_file_path = os.path.join(input_data_path, 'iris.data')
+clf, accuracy = training_logic(input_file_path=input_file_path, hyperparams_path=hyperparams_path)
+
+output_model_file_path = os.path.join(model_save_path, 'model.pkl')
+joblib.dump(clf, output_model_file_path)
+
+log_metric("Accuracy", accuracy)
+</code></pre>
+<p>and at the top of the file, add:</p>
+<pre><code>import os
+
+from sagify.api.hyperparameter_tuning import log_metric
+from sklearn.externals import joblib
+
+from iris_training import train as training_logic
+</code></pre>
+</li>
+<li>
+<p>Create in the root directory of the project a YAML file with name <code>.kenza.yml</code> and the following content:</p>
+<p>```
+sagify:</p>
+<p>train:
+  input_s3_dir: s3://kenza-ds-demo/iris-data/iris.data
+  output_s3_dir: s3://<your-own-bucket>
+  hyperparameters_file: hyperparameters.json
+  ec2_type: ml.m5.large
+  volume_size: 50
+  timeout: 86400
+  metrics: Accuracy
+<code>``
+14. Commit and push changes to master branch
+15. Make sure you have created an account on</code>http://localhost/#/signup<code>and log in on</code>http://localhost/<code>16. You should see a button prompting you to create your first Kenza project. Click on it.
+17. Now it's time to populate the fields:
+1. Go to</code>https://github.com/settings/tokens<code>and click on</code>repo:status<code>. This will give the ability to Kenza to have read access to this repo. Create the token and copy it.
+![Github token](github_token.png)
+2. Paste it on the access token field on Kenza
+3. Git ref regex should take the value</code>refs/heads/master<code>. This field denotes to which branches or tags to listen to. In this cases, we listen to changes only on master branch.
+4. Repository clone url should be the url of the forked repo under your github account. Example:</code>https://github.com/pm3310/kenza-ds-demo<code>5. The name of the project can be</code>Kenza DS Demo<code>6. The description field is optional. Leave it blank for now. 
+7. Click on</code>Create<code>! Voilà! Your first Kenza project is created! You should be landed on Kenza's page of projects. 
+18. Click on the</code>run` button on the bottom right corner of the newly created project. This will trigger Kenza to go and find the latest commit on master branch, grab the code and execute training. 
+19. Click on the arrow on the created project to see the list of jobs. You'll see something like that: 
+<img alt="Training Job" src="training_job.png" />
+20. Click on the id of the training on the top right corner and you'll find the configuration of the training job, input data path, model output path, accuracy metrics and many more!
+<img alt="Training Job Details Page" src="training_job_details_page.png" /></p>
+</li>
+</ol>
+<h2 id="running-kenza-on-the-cloud">Running Kenza on the Cloud</h2>
+<p>More more</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>More more</p>
+<h2 id="component-overview">Component Overview</h2>
+<p>More more</p>
+<h2 id="documentation">Documentation</h2>
+<p>The following 4 ML pipelines are supported currently:</p>
+<h3 id="train">Train</h3>
+<p>In this case, you want just to train your model(s) every time you push to a specific Git branch and report Precision and Recall. An example on how you can specify your <code>.kenza.yml</code>:</p>
+<pre><code>```
+sagify:
+
+train:
+  input_s3_dir: s3://sagify-0.13.1/iris.csv  # Path to training data on S3
+  output_s3_dir: s3://kenza-training-models  # Path to where to save trained model(s)
+  ec2_type: ml.m5.large                      # EC2 Type for training
+  hyperparameters_file: hyperparams.json     # Optional path to local hyperparameters file
+  volume_size: 50                            # EBS Volume size
+  timeout: 86400                             # Time out (in seconds) until training is forced to stop
+  metrics: Precision, Recall                 # Evaluation metrics to report
+```
+</code></pre>
+<p>The section "Getting started for Data Scientists" shows how to set up your ML project and report the evaluation metrics in detail.</p>
+<h3 id="train-and-deploy">Train and Deploy</h3>
+<p>In this case, you want just to train your model(s) every time you push to a specific Git branch, report Precision and Recall, and (re-)deploy it as a REST Service. An example on how you can specify your <code>.kenza.yml</code>:</p>
+<pre><code>```
+sagify:
+
+train:
+  input_s3_dir: s3://sagify-0.13.1/iris.csv  # Path to training data on S3
+  output_s3_dir: s3://kenza-training-models  # Path to where to save trained model(s)
+  ec2_type: ml.m5.large                      # EC2 Type for training
+  hyperparameters_file: hyperparams.json     # (Optional) Path to local hyperparameters file
+  volume_size: 50                            # EBS Volume size
+  timeout: 86400                             # Time out (in seconds) until training is forced to stop
+  metrics: Precision, Recall                 # (Optional) Evaluation metrics to report
+
+  deploy:
+    instances_count: 1                       # Number of EC2 instances for inference
+    ec2_type: ml.t2.medium                   # EC Type for inference
+    endpoint: some-endpoint                  # Name of endpoint
+```
+</code></pre>
+<p>The section "Getting started for Data Scientists" shows how to set up your ML project and report the evaluation metrics in detail. In this example you need to implement the deploy functionality. Sagify documentation has an example: https://kenza-ai.github.io/sagify/.</p>
+<h3 id="tune">Tune</h3>
+<p>In this case, you want just to tune your model(s) every time you push to a specific Git branch and report best hyperparameter values. An example on how you can specify your <code>.kenza.yml</code>:</p>
+<pre><code>```
+sagify:
+
+hyperparameter_optimization:
+  input_s3_dir: s3://sagify-0.13.1/iris.csv        # Path to training data on S3
+  output_s3_dir: s3://kenza-training-models        # Path to where to save all trained model(s)
+  ec2_type: ml.m5.large                            # EC2 Type for training
+  hyperparameter_ranges_file: hyperparams.json     # Path to local hyperparameter ranges file
+  volume_size: 50                                  # EBS Volume size
+  timeout: 86400                                   # Time out (in seconds) until training is forced to stop
+  max_jobs: 2                                      # Number of total max tuning jobs
+  max_parallel_jobs: 2                             # Number of max parallel tuning jobs
+```
+</code></pre>
+<p>You also need to specify the hyperparameter ranges file. Here's an example:</p>
+<pre><code>```
+{
+    "ParameterRanges": {
+        "CategoricalParameterRanges": [
+            {
+                "Name": "kernel",
+                "Values": ["linear", "rbf"]
+            }
+        ],
+        "ContinuousParameterRanges": [
+        {
+          "MinValue": 0.001,
+          "MaxValue": 10,
+          "Name": "gamma"
+        }
+        ],
+        "IntegerParameterRanges": [
+            {
+                "Name": "C",
+                "MinValue": 1,
+                "MaxValue": 10
+            }
+        ]
+    },
+    "ObjectiveMetric": {
+        "Name": "Precision",
+        "Type": "Maximize"
+    }
+}
+```
+</code></pre>
+<h3 id="tune-and-deploy">Tune and Deploy</h3>
+<p>In this case, you want just to tune your model(s) every time you push to a specific Git branch, report report best hyperparameter values, and (re-)deploy the best model as a REST Service. An example on how you can specify your <code>.kenza.yml</code>:</p>
+<pre><code>```
+sagify:
+
+hyperparameter_optimization:
+  input_s3_dir: s3://sagify-0.13.1/iris.csv        # Path to training data on S3
+  output_s3_dir: s3://kenza-training-models        # Path to where to save all trained model(s)
+  ec2_type: ml.m5.large                            # EC2 Type for training
+  hyperparameter_ranges_file: hyperparams.json     # Path to local hyperparameter ranges file
+  volume_size: 50                                  # EBS Volume size
+  timeout: 86400                                   # Time out (in seconds) until training is forced to stop
+  max_jobs: 2                                      # Number of total max tuning jobs
+  max_parallel_jobs: 2                             # Number of max parallel tuning jobs
+
+  deploy:
+    instances_count: 1                       # Number of EC2 instances for inference
+    ec2_type: ml.t2.medium                   # EC Type for inference
+    endpoint: some-endpoint                  # Name of endpoint
+```
+</code></pre>
+<p>You also need to specify the hyperparameter ranges file as specified previously.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/Kenza-AI/kenza/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.1.2
+Build Date UTC : 2020-05-26 20:35:53.259800+00:00
+-->

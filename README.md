@@ -2,7 +2,7 @@
 
 *Kenza* is an open source cloud-native system (moving from `Docker Swarm` to `Kubernetes` in 2020) for Machine Learning Continuous Integration and Delivery you can run in one command. It leverages containers and the cloud to provide basic mechanisms for building, training and deploying Machine Learning models on [AWS SageMaker](https://aws.amazon.com/sagemaker/).
 
-It makes it easy to schedule training, batch prediction, hyperparameter tuning and deployment jobs on regular intervals or specific points in time e.g. running batch predictions every week or automatically redeploying a model in a QA or production environment every morning.
+It makes it easy to run training, batch prediction, hyperparameter tuning and deployment jobs on regular intervals or specific points in time e.g. running batch predictions every week or automatically redeploying a model in a QA or production environment every morning.
 
 On top of its traditional "pipeline" features, the *Kenza* web app helps identify training (or other) jobs that are performing better e.g. have a better _accuracy_ or _precision_ score.
 

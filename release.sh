@@ -19,7 +19,7 @@ done
 git tag -a $tag -m "$tag"
 
 # 2. Release to GitHub
-if goreleaser --release-notes=CHANGELOG.md ; then
+if goreleaser --release-notes=CHANGELOG-$tag.md ; then
     echo "Release succeeded"
 else
     echo "Release failed"

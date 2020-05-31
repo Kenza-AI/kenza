@@ -19,3 +19,6 @@ kenza/data/
 
 # mkdocs documentation
 /site
+
+# Ephemeral CHANGELOG entries
+CHANGELOG-*

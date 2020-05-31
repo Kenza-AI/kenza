@@ -17,7 +17,11 @@ done
 
 # 1. Tag the release
 git tag -a $tag -m "$tag"
-git push --tags
 
 # 2. Release to GitHub
-goreleaser --rm-dist
+if goreleaser --release-notes=CHANGELOG-$tag.md ; then
+    echo "Release succeeded"
+else
+    echo "Release failed"
+    git tag -d $tag && git push origin --delete $tag
+fi

@@ -12,12 +12,12 @@ Download the binary from the latest GitHub release:
 
 ```sh
 # Linux
-curl -L https://github.com/kenza-ai/kenza/releases/download/v0.0.1-alpha/kenza-linux-amd64 -o kenza
+curl -L https://github.com/kenza-ai/kenza/releases/download/v0.0.1-alpha/kenza_0.0.1-alpha_linux_amd64 -o kenza
 ```
 
 ```sh
 # macOS
-curl -L https://github.com/kenza-ai/kenza/releases/download/v0.0.1-alpha/kenza-darwin-amd64 -o kenza
+curl -L https://github.com/kenza-ai/kenza/releases/download/v0.0.1-alpha/kenza_0.0.1-alpha_darwin_amd64 -o kenza
 ```
 
 Move it under a PATH directory, we prefer `/usr/local/bin`:

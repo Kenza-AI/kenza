@@ -51,7 +51,10 @@ const jobOptionsSection = (job, viewLogsHandler, deleteJobsHandler, viewJobDetai
         {isFinished(job) && viewJobDetailsCTA(job, viewJobDetailsHandler)}
         {isFinished(job) && logCTA(job.id, viewLogsHandler, job.project.id)}
         {isFinished(job) && deleteCTA(job.id, deleteJobsHandler, job.project.id)}
-        {!isFinished(job) && cancelCTA(job.id, cancelJobsHandler, job.project.id)}
+        
+        {/* temporarily hide the "cancel job" CTA while the "cancel job" feature is under development*/}
+        {/* {!isFinished(job) && cancelCTA(job.id, cancelJobsHandler, job.project.id)} */}
+        
     </div>
 )
 

@@ -54,6 +54,7 @@ services:
       - api
       - pubsub
     volumes:
+      - ./api_key.secret:/run/secrets/api_key
       - /var/run/docker.sock:/var/run/docker.sock # use host's docker
       - ${KENZA_JOB_LOGS_HOST_PATH}:${KENZA_JOB_LOGS_CONTAINER_PATH}:rw
       - ${KENZA_AWS_CONFIG_HOST_PATH}:${KENZA_WORKER_AWS_CONFIG_CONTAINER_PATH}:ro
@@ -78,6 +79,9 @@ services:
     depends_on:
       - api
       - pubsub
+    volumes:
+      - ./api_key.secret:/run/secrets/api_key
+  
 
   api:
     init: true
@@ -114,6 +118,7 @@ services:
       - db
       - pubsub
     volumes:
+      - ./api_key.secret:/run/secrets/api_key
       - ${KENZA_JOB_LOGS_HOST_PATH}:${KENZA_JOB_LOGS_CONTAINER_PATH}:ro
       - ${KENZA_AWS_CONFIG_HOST_PATH}:${KENZA_API_AWS_CONFIG_CONTAINER_PATH}:ro
       - ${KENZA_AWS_CREDENTIALS_HOST_PATH}:${KENZA_API_AWS_CREDENTIALS_CONTAINER_PATH}:ro
@@ -135,6 +140,8 @@ services:
     depends_on:
       - api
       - pubsub
+    volumes:
+      - ./api_key.secret:/run/secrets/api_key
 
   web:
     init: true

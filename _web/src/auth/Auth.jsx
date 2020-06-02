@@ -16,8 +16,6 @@ const Auth = ({ signInHandler, signUpHandler, isSigningIn, isSigningUp, signInEr
         <img src='kenza_logo.svg' />
       </header>
       <p>{formTitle(isSignUpMode)}</p>
-      {isSignUpMode && <p>While Kenza is in a limited preview release, a new batch of invites will be sent out weekly.</p>}
-      {isSignUpMode && <p> Sign up to be added to the waitlist.</p>}
       {signInError && <section className='auth-notification'>{signInError}</section>}
       {signUpError && <section className='auth-notification'>{signUpError}</section>}
       <form className='auth-form'>
@@ -102,7 +100,7 @@ const mainActionButtonTitle = (isSigningIn, isSigningUp, signUpMode) => {
 }
 
 const formTitle = signUpMode => (
-    signUpMode ? 'Sign up for the Private Alpha' : 'Hi there, come on in!'
+    signUpMode ? 'Sign up for a Kenza account' : 'Hi there, come on in!'
 )
 
 const toggleModePromptTitle = signUpMode => (

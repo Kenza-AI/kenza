@@ -1,8 +1,8 @@
 # Kenza
 
-[Kenza](https://beta.kenza.ai/#/) is an open-source Machine Learning Platform.
+[Kenza](https://github.com/Kenza-AI/kenza) is an open-source Machine Learning Platform.
 
-More specifically, it is an open source cloud-native (moving from Docker Swarm to Kubernetes in 2020) system for Machine Learning Continuous Integration and Delivery (CD4ML) you can run in one command. It leverages containers and the cloud to provide basic mechanisms for training, tuning and deploying Machine Learning models.
+More specifically, it is an open source cloud-native (moving from `Docker Swarm` to `Kubernetes` in 2020) system for Machine Learning Continuous Integration and Delivery (CD4ML) you can run in one command. It leverages containers and the cloud to provide basic mechanisms for training, tuning and deploying Machine Learning models.
 
 **What ML Engines does it support?**
 

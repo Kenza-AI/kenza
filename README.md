@@ -1,10 +1,59 @@
 ## Kenza
 
-*Kenza* is an open source cloud-native system (moving from `Docker Swarm` to `Kubernetes` in 2020) for Machine Learning Continuous Integration and Delivery you can run in one command. It leverages containers and the cloud to provide basic mechanisms for building, training and deploying Machine Learning models on [AWS SageMaker](https://aws.amazon.com/sagemaker/).
+*Kenza* is an open-source Machine Learning Platform.
 
-It makes it easy to run training, batch prediction, hyperparameter tuning and deployment jobs on regular intervals or specific points in time e.g. running batch predictions every week or automatically redeploying a model in a QA or production environment every morning.
+More specifically, it is an open source cloud-native (moving from `Docker Swarm` to `Kubernetes` in 2020) system for Machine Learning Continuous Integration and Delivery (CD4ML) you can run in one command. It leverages containers and the cloud to provide basic mechanisms for training, tuning and deploying Machine Learning models.
 
-On top of its traditional "pipeline" features, the *Kenza* web app helps identify training (or other) jobs that are performing better e.g. have a better _accuracy_ or _precision_ score.
+**What ML Engines does it support?**
+
+- AWS SageMaker
+- More to be added soon
+
+**What does it provide to Data Scientists?**
+
+- A web UI where you can track and compare your training and hyperparameter tuning jobs, and model deployments
+
+**How does a Data Scientist use it?**
+
+- It's very simple! You need to implement a `train` and `predict` functionality in Python, and define a YAML file. Example:
+
+        sagify:
+        
+        train:
+          input_s3_dir: s3://kenza-ds-demo/iris-data/iris.data
+          output_s3_dir: s3://kenza-training-models
+          hyperparameters_file: hyperparameters.json
+          ec2_type: ml.m5.large
+          volume_size: 50
+          timeout: 86400
+          metrics: Accuracy
+          
+          deploy:
+            instances_count: 1
+            ec2_type: ml.t2.medium
+            endpoint: some-endpoint
+
+**Why a Machine Learning team should care?**
+
+- Focus on Machine Learning, not ML Ops
+- Continuous and Reliable training,  hyperparameter tuning and deployment
+- Version control of ML models
+- Shorter time to put a model in production
+- No need to spend months to change your current ML codebase to meet the needs of this ML platform
+- Integrates easily with existing software engineering best practices
+- Less resources invested on ML Infrastructure Engineers
+
+**Why a Machine Learning Infrastructure team should care?**
+
+- Clean open-source ML Platform
+- Customize it as you wish 
+- Shorter time to deliver 
+- Easy to integrate with existing Engineering processes
+- Support of many ML Engines (at the moment only AWS SageMaker)
+
+**The best part is that you can continue using your favorite libraries!**
+
+**Go to https://kenza-ai.github.io/kenza/**, install Kenza and follow the steps in *Getting started for Data Scientists and ML Infrastructure Engineers*
 
 ## Installation
 

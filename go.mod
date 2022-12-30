@@ -3,7 +3,7 @@ module github.com/kenza-ai/kenza
 go 1.13
 
 require (
-	github.com/aws/aws-sdk-go v1.25.19
+	github.com/aws/aws-sdk-go v1.33.0
 	github.com/blang/semver v3.5.1+incompatible
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/google/go-github/v29 v29.0.2
